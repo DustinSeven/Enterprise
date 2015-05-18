@@ -1,0 +1,62 @@
+//
+//  PrefixHeader.pch
+//  Enterprise
+//
+//  Created by 李明伟 on 15/1/14.
+//  Copyright (c) 2015年 TTB. All rights reserved.
+//
+
+#ifndef Enterprise_PrefixHeader_pch
+#define Enterprise_PrefixHeader_pch
+
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import "TTBUtility.h"
+#import "TTBBaseNavController.h"
+#import "UIView+NewInfo.h"
+#import "TTBHttpClient.h"
+#endif
+
+#define HeadViewHeight (IS_IPHONE4?64:(IS_IPHONE5?64:64))
+
+#define MainColorNormal [UIColor colorWithRed:24.0f / 255.0f green:164.0f / 255.0f blue:254.0f / 255.0f alpha:1.0f]
+#define MainColorHeavy [UIColor colorWithRed:0.0f / 255.0f green:119.0f / 255.0f blue:229.0f / 255.0f alpha:1.0f]
+
+
+#define TabBarHeight 49
+
+#define NavLeftBtnHeight 50
+#define NavLeftBtnWidth 80
+
+#define LEFT_DRAWER_WIDTH 200
+
+#define SCREEN_WIDTH [[UIScreen mainScreen] bounds].size.width
+#define SCREEN_HEIGHT [[UIScreen mainScreen] bounds].size.height
+
+#define IS_PHONE [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone
+#define IS_IPHONE4 ((SCREEN_HEIGHT == 480 && SCREEN_WIDTH == 320)? YES:NO)
+#define IS_IPHONE5 ((SCREEN_HEIGHT == 568 && SCREEN_WIDTH == 320)? YES:NO)
+#define IS_IPHONE6 ((SCREEN_HEIGHT == 667 && SCREEN_WIDTH == 375)? YES:NO)
+
+#define APP_FONT_COLOR_NORMAL [UIColor colorWithRed:68.0f / 255.0f green:68.0f / 255.0f blue:68.0f / 255.0f alpha:1.0f]
+#define APP_FONT_COLOR_THIN [UIColor colorWithRed:108.0f / 255.0f green:108.0f / 255.0f blue:108.0f / 255.0f alpha:1.0f]
+
+#define APP_FONT_SIZE_NORMAL 15
+#define APP_FONT_SIZE_SMALL 11
+
+#define CELL_SELECTED_COLOR [UIColor colorWithRed:246.0f / 255.0f green:246.0f / 255.0f blue:246.0f / 255.0f alpha:1.0f]
+#define VIEW_BACKGROUND [UIColor colorWithRed:240.0f / 255.0f green:240.0f / 255.0f blue:240.0f / 255.0f alpha:1.0f]
+
+#define SeparatorColor [UIColor colorWithRed:196.0f / 255.0f green:196.0f / 255.0f blue:196.0f / 255.0f alpha:1.0f]
+
+#define USER_DEFAULT_ENTITY_KEY @"USER_DEFAULT_ENTITY_KEY"
+
+#define APP_BASE_URL @"http://localhost:8080"
+#define LOGIN_URL @"/parttimejobAPI/enterpriselogin"
+#define GET_INFO_URL @"/parttimejobAPI/getenterpriseinfo"
+#define REGISTER_URL @"/parttimejobAPI/enterpriseregister"
+#define CHANGE_PWD_URL @"/parttimejobAPI/enterprisechangepwd"
+
+
+#endif

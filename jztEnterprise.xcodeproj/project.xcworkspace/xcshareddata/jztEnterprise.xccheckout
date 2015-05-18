@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>1A110EFB-6ABE-436E-A9D8-AD118CB063CD</string>
+	<key>IDESourceControlProjectName</key>
+	<string>jztEnterprise</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>52a88f37-b3ca-174a-b763-b4c67b43225a++7032</key>
+		<string>https://svn.nuoyayun.net/svn/guangyang/Projects/Jianzhitoo/IOS/jztEnterpriseV1</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>jztEnterprise.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>52a88f37-b3ca-174a-b763-b4c67b43225a++7032</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectRepositoryRootDictionary</key>
+	<dict>
+		<key>52a88f37-b3ca-174a-b763-b4c67b43225a++7032</key>
+		<string>https://svn.nuoyayun.net/svn/guangyang</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://svn.nuoyayun.net/svn/guangyang/Projects/Jianzhitoo/IOS/jztEnterpriseV1/jztEnterprise.xcodeproj</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>52a88f37-b3ca-174a-b763-b4c67b43225a++7032</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.subversion</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>52a88f37-b3ca-174a-b763-b4c67b43225a++7032</string>
+			<key>IDESourceControlWCCName</key>
+			<string>jztEnterpriseV1</string>
+		</dict>
+	</array>
+</dict>
+</plist>
