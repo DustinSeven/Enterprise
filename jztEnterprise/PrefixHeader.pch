@@ -51,12 +51,15 @@
 #define SeparatorColor [UIColor colorWithRed:196.0f / 255.0f green:196.0f / 255.0f blue:196.0f / 255.0f alpha:1.0f]
 
 #define USER_DEFAULT_ENTITY_KEY @"USER_DEFAULT_ENTITY_KEY"
+#define TMP_USER_IMG_NAME_WITH_TYPE @"tmp_user_img.png"
 
 #define APP_BASE_URL @"http://localhost:8080"
 #define LOGIN_URL @"/parttimejobAPI/enterpriselogin"
 #define GET_INFO_URL @"/parttimejobAPI/getenterpriseinfo"
 #define REGISTER_URL @"/parttimejobAPI/enterpriseregister"
 #define CHANGE_PWD_URL @"/parttimejobAPI/enterprisechangepwd"
+#define UPLOAD_USER_IMG_URL @"/parttimejobAPI/uploadenterimg"
+#define UPDATE_ENTER_INFO_URL @"/parttimejobAPI/updateenterinfo"
 
 
 #endif

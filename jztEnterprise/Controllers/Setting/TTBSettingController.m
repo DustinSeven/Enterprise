@@ -32,6 +32,8 @@
         
         _baseView.baseTableView.delegate = self;
         _baseView.baseTableView.dataSource = self;
+        
+        [_baseView.logoutBtn addTarget:self action:@selector(logoutBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     }
 }
 
@@ -39,6 +41,12 @@
 {
     [super viewDidAppear:animated];
     
+}
+
+#pragma -mark 登出按钮事件
+- (void)logoutBtnClicked:(UIButton *)button
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"LogOut" object:nil];
 }
 
 #pragma mark - UITableViewDataSource

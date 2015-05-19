@@ -33,6 +33,11 @@
                                    background:(UIColor *)color;
 
 + (void)saveUserDefaults:(id)object key:(NSString *)key;
++ (void)removeUserDefaults:(NSString *)key;
 + (id)readUserDefaults:(NSString *)key;
 + (BOOL)checkTel:(NSString *)str;
+
++(UIImage*)imageWithImage:(UIImage*)image scaledToSize:(CGSize)newSize;
+
++ (UIImage *)getDefaultImgWithSize:(CGSize)size;
 @end

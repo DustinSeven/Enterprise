@@ -130,6 +130,8 @@
             user.img = [dic objectForKey:@"img"];
             user.remark = [dic objectForKey:@"remark"];
             user.sex = [dic objectForKey:@"sex"];
+            user.email = [dic objectForKey:@"email"];
+            user.qq = [dic objectForKey:@"qq"];
             user.mobile = loginParam.mobile;
             user.pwd = loginParam.pwd;
             

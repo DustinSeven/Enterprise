@@ -92,7 +92,7 @@
             self.tipLab.hidden = NO;
             self.tipLab.textColor = APP_FONT_COLOR_NORMAL;
             self.tipLab.frame = CGRectMake(CGRectGetMaxX(self.line.frame) + 5, 0, SCREEN_WIDTH - (CGRectGetMaxX(self.line.frame) + 5) - ReleaseJobMainSpacing - 20, ReleaseJobCellHeight);
-            self.tipLab.text = @"元/天";
+            self.tipLab.text = @"元/时";
         }
             break;
         case ReleaseJobCellType_JobType:
@@ -188,7 +188,7 @@
             self.titleLab.text = @"性别限制";
             
             self.tipLab.hidden = NO;
-            self.tipLab.text = @"无";
+            self.tipLab.text = @"无限制";
             self.tipLab.textColor = APP_FONT_COLOR_NORMAL;
             self.tipLab.frame = CGRectMake(CGRectGetMaxX(self.titleLab.frame), 0, SCREEN_WIDTH - CGRectGetMaxX(self.titleLab.frame) - ReleaseJobMainSpacing - 20, ReleaseJobCellHeight);
         }

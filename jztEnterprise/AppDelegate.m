@@ -11,6 +11,9 @@
 #import "TTBLoginController.h"
 
 @interface AppDelegate ()
+{
+    TTBBaseNavController *mainNavigation;
+}
 
 @end
 
@@ -36,8 +39,9 @@
 //    }
     
     TTBLoginController *loginController = [[TTBLoginController alloc]init];
-    TTBBaseNavController *mainNavigation = [[TTBBaseNavController alloc]initWithRootViewController:loginController];
+    mainNavigation = [[TTBBaseNavController alloc]initWithRootViewController:loginController];
     mainNavigation.navigationBarHidden = YES;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(logout) name:@"LogOut" object:nil];
     self.window.rootViewController = mainNavigation;
     
     return YES;
@@ -47,6 +51,12 @@
     if (notificationSettings.types!=UIUserNotificationTypeNone) {
         [self addLocalNotification];
     }
+}
+
+#pragma -mark logout
+- (void)logout
+{
+    [mainNavigation popToRootViewControllerAnimated:YES];
 }
 
 #pragma mark 进入前台后设置消息信息

@@ -193,6 +193,13 @@
     [userDefault synchronize];
 }
 
++ (void)removeUserDefaults:(NSString *)key
+{
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    [userDefault removeObjectForKey:key];
+    [userDefault synchronize];
+}
+
 + (id)readUserDefaults:(NSString *)key
 {
     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
@@ -217,6 +224,40 @@
     if (!isMatch)
         return NO;
     return YES;
+}
+
++(UIImage*)imageWithImage:(UIImage*)image scaledToSize:(CGSize)newSize
+{
+    // Create a graphics image context
+    UIGraphicsBeginImageContext(newSize);
+    
+    // Tell the old image to draw in this new context, with the desired
+    // new size
+    [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+    
+    // Get the new image from the context
+    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    // End the context
+    UIGraphicsEndImageContext();
+    
+    // Return the new image.
+    return newImage;
+}
+
++ (UIImage *)getDefaultImgWithSize:(CGSize)size
+{
+    UIColor *color = [UIColor whiteColor];
+    UIImage *image = [self imageWithColor:color size:size];
+    
+    UIImage *defaultLogo = [UIImage imageNamed:@"default_img_logo"];
+    
+    UIGraphicsBeginImageContextWithOptions(size, NO, [UIScreen mainScreen].scale);
+    [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
+    [defaultLogo drawInRect:CGRectMake((size.width - defaultLogo.size.width) / 2, (size.height - defaultLogo.size.height) / 2, defaultLogo.size.width, defaultLogo.size.height)];
+    UIImage *resultingImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return resultingImage;
 }
 
 @end

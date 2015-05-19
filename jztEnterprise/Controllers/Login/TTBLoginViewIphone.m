@@ -113,7 +113,7 @@
     
     backImg.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     
-    logoImg.frame = CGRectMake((SCREEN_WIDTH - (LoginLogoWidth - 45)) / 2, 70, LoginLogoWidth, LoginLogoHeight);
+    logoImg.frame = CGRectMake((SCREEN_WIDTH - (LoginLogoWidth - 25)) / 2, 70, LoginLogoWidth, LoginLogoHeight);
     
     self.accountText.frame = CGRectMake(LoginMainSpacing, CGRectGetMaxY(logoImg.frame) + 35, (SCREEN_WIDTH - 2 * LoginMainSpacing), LoginTextHeight);
     self.pwdText.frame = CGRectMake(LoginMainSpacing, CGRectGetMaxY(self.accountText.frame) + 1, (SCREEN_WIDTH - 2 * LoginMainSpacing), LoginTextHeight);

@@ -22,6 +22,13 @@
     NSArray *unitArr;
     NSMutableArray *jobTypeArr;
     NSArray *countWayArr;
+    
+    int selectedUnitIndex;
+    int selectedCountIndex;
+    int selectedTypeIndex;
+    int selectedSexIndex;
+    int selectedHelthIndex;
+    int selectedInterviewIndex;
 }
 
 @end
@@ -37,6 +44,12 @@
         _baseView = [[TTBReleaseJobViewIphone alloc]init];
         self.view = _baseView;
         
+        selectedCountIndex = -1;
+        selectedTypeIndex = -1;
+        selectedSexIndex = 2;
+        selectedHelthIndex = 1;
+        selectedInterviewIndex = 1;
+        
         self.title = @"发布兼职";
         
         _baseView.baseTableView.delegate = self;
@@ -44,8 +57,8 @@
         
         isShowDropList = NO;
         
-        unitArr = [[NSArray alloc]initWithObjects:@"元/天",@"元/月",@"元/次",@"元/小时", nil];
-        jobTypeArr = [NSMutableArray arrayWithObjects:@"礼仪",@"发传单",@"啥",@"啥",@"啥",@"啥",@"啥", nil];
+        unitArr = [[NSArray alloc]initWithObjects:@"元/时",@"元/天",@"元/周",@"元/月", nil];
+        jobTypeArr = [NSMutableArray arrayWithObjects:@"促销员",@"发传单",@"服务员",@"礼仪模特",@"工作人员",@"问卷调查",@"话务员", nil];
         countWayArr = [NSArray arrayWithObjects:@"日结",@"周结",@"月结",@"完工结", nil];
     }
 }
@@ -323,21 +336,21 @@
         TTBActionSheet *act = [[TTBActionSheet alloc]init];
         act.specialTag = 1;
         act.delegate = self;
-        [act showWithTitlesArrAsTable:unitArr parentView:self.view defaultSelectedIndex:1];
+        [act showWithTitlesArrAsTable:unitArr parentView:self.view defaultSelectedIndex:selectedUnitIndex];
     }
     if(indexPath.section == 1 && indexPath.row == 1)
     {
         TTBActionSheet *act = [[TTBActionSheet alloc]init];
         act.specialTag = 2;
         act.delegate = self;
-        [act showWithTitlesArrAsTable:jobTypeArr parentView:self.view defaultSelectedIndex:1];
+        [act showWithTitlesArrAsTable:jobTypeArr parentView:self.view defaultSelectedIndex:selectedTypeIndex];
     }
     if(indexPath.section == 1 && indexPath.row == 2)
     {
         TTBActionSheet *act = [[TTBActionSheet alloc]init];
         act.specialTag = 3;
         act.delegate = self;
-        [act showWithTitlesArrAsTable:countWayArr parentView:self.view defaultSelectedIndex:1];
+        [act showWithTitlesArrAsTable:countWayArr parentView:self.view defaultSelectedIndex:selectedCountIndex];
     }
     if(indexPath.section == 2 && indexPath.row == 0)
     {
@@ -358,7 +371,7 @@
         TTBActionSheet *act = [[TTBActionSheet alloc]init];
         act.specialTag = 5;
         act.delegate = self;
-        [act showWithTitlesArrAsTable:@[@"男",@"女",@"不限"] parentView:self.view defaultSelectedIndex:1];
+        [act showWithTitlesArrAsTable:@[@"男",@"女",@"不限"] parentView:self.view defaultSelectedIndex:selectedSexIndex];
     }
     if(indexPath.section == 4 && indexPath.row == 1)
     {
@@ -372,14 +385,14 @@
         TTBActionSheet *act = [[TTBActionSheet alloc]init];
         act.specialTag = 7;
         act.delegate = self;
-        [act showWithTitlesArrAsTable:@[@"需要",@"不需要"] parentView:self.view defaultSelectedIndex:1];
+        [act showWithTitlesArrAsTable:@[@"需要",@"不需要"] parentView:self.view defaultSelectedIndex:selectedHelthIndex];
     }
     if(indexPath.section == 4 && indexPath.row == 3)
     {
         TTBActionSheet *act = [[TTBActionSheet alloc]init];
         act.specialTag = 8;
         act.delegate = self;
-        [act showWithTitlesArrAsTable:@[@"需要",@"不需要"] parentView:self.view defaultSelectedIndex:1];
+        [act showWithTitlesArrAsTable:@[@"需要",@"不需要"] parentView:self.view defaultSelectedIndex:selectedInterviewIndex];
     }
     
 }
@@ -393,6 +406,7 @@
     {
         TTBReleaseJobCell *cell = (TTBReleaseJobCell *)[_baseView.baseTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
         cell.tipLab.text = [unitArr objectAtIndex:index];
+        selectedUnitIndex = index;
     }
     
     if(actionSheet.specialTag == 2)
@@ -400,6 +414,7 @@
         TTBReleaseJobCell *cell = (TTBReleaseJobCell *)[_baseView.baseTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]];
         cell.tipLab.textColor = APP_FONT_COLOR_NORMAL;
         cell.tipLab.text = [jobTypeArr objectAtIndex:index];
+        selectedTypeIndex = index;
     }
     
     if(actionSheet.specialTag == 3)
@@ -407,6 +422,7 @@
         TTBReleaseJobCell *cell = (TTBReleaseJobCell *)[_baseView.baseTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:1]];
         cell.tipLab.textColor = APP_FONT_COLOR_NORMAL;
         cell.tipLab.text = [countWayArr objectAtIndex:index];
+        selectedCountIndex = index;
     }
     
     if(actionSheet.specialTag == 5)
@@ -418,7 +434,8 @@
         if(index == 1)
             cell.tipLab.text = @"女";
         if(index == 2)
-            cell.tipLab.text = @"无";
+            cell.tipLab.text = @"无限制";
+        selectedSexIndex = index;
     }
     
     if(actionSheet.specialTag == 6)
@@ -439,6 +456,7 @@
             cell.tipLab.text = @"需要";
         if(index == 1)
             cell.tipLab.text = @"不需要";
+        selectedHelthIndex = index;
     }
     
     if(actionSheet.specialTag == 8)
@@ -449,14 +467,24 @@
             cell.tipLab.text = @"需要";
         if(index == 1)
             cell.tipLab.text = @"不需要";
+        selectedInterviewIndex = index;
     }
     
-    if(actionSheet.specialTag == 4 && index == 0)
+    if(actionSheet.specialTag == 4)
     {
-        TTBActionSheet *act = [[TTBActionSheet alloc]init];
-        act.delegate = self;
-        act.specialTag = 9;
-        [act showCalendarWithParentView:self.view selectedDateArr:nil repeatable:YES];
+        if(index == 0)
+        {
+            TTBActionSheet *act = [[TTBActionSheet alloc]init];
+            act.delegate = self;
+            act.specialTag = 9;
+            [act showCalendarWithParentView:self.view selectedDateArr:nil repeatable:YES];
+        }
+        else
+        {
+            TTBReleaseJobCell *cell = (TTBReleaseJobCell *)[_baseView.baseTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:2]];
+            cell.tipLab.textColor = APP_FONT_COLOR_NORMAL;
+            cell.tipLab.text = @"长期";
+        }
     }
 }
 

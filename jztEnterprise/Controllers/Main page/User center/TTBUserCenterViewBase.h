@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TTBUserCenterCell.h"
 
 #define MyTopBackImgHeight 150
 
@@ -19,10 +18,12 @@
 
 #define MenuTitleViewHeight 13.5
 
+#define UserCenterCellHeight 45
+#define UserCenterCellIconWidth 20
+
 @interface TTBUserCenterViewBase : UIView
 
 @property (nonatomic , strong) UIImageView *enterImg;
-@property (nonatomic , strong) UILabel *enterName;
 @property (nonatomic , strong) UITableView *menuTableView;
 
 @end

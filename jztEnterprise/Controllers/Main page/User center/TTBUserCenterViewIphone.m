@@ -53,13 +53,6 @@
     self.enterImg.userInteractionEnabled = YES;
     [enterImgBackView addSubview:self.enterImg];
     
-    self.enterName = [[UILabel alloc]init];
-    self.enterName.font = [UIFont systemFontOfSize:APP_FONT_SIZE_NORMAL + 5];
-    self.enterName.textColor = APP_FONT_COLOR_NORMAL;
-    self.enterName.lineBreakMode = NSLineBreakByWordWrapping;
-    self.enterName.numberOfLines = 0;
-    [self addSubview:self.enterName];
-    
     self.menuTableView = [[UITableView alloc]init];
     self.menuTableView.showsVerticalScrollIndicator = NO;
     self.menuTableView.bounces = NO;
@@ -78,9 +71,9 @@
     enterImgBackView.frame = CGRectMake(32.5 - 3, 110 - 3 + HeadViewHeight, EnterImgHeight + 6, EnterImgWidth + 6);
     self.enterImg.frame = CGRectMake(3, 3 , EnterImgHeight, EnterImgWidth);
     
-    self.enterName.frame = CGRectMake(CGRectGetMaxX(enterImgBackView.frame) + 10, CGRectGetMaxY(topBackImg.frame), SCREEN_WIDTH - CGRectGetMaxX(self.enterImg.frame) - 10 - 10, 30);
+//    self.enterName.frame = CGRectMake(CGRectGetMaxX(enterImgBackView.frame) + 10, CGRectGetMaxY(topBackImg.frame), SCREEN_WIDTH - CGRectGetMaxX(self.enterImg.frame) - 10 - 10, 30);
     
-    self.menuTableView.frame = CGRectMake(0, CGRectGetMaxY(enterImgBackView.frame) + 10, SCREEN_WIDTH, 2 *UserCenterCellHeight + MenuTitleViewHeight);
+    self.menuTableView.frame = CGRectMake(0, CGRectGetMaxY(enterImgBackView.frame) + 10, SCREEN_WIDTH, 7 * UserCenterCellHeight + MenuTitleViewHeight);
 }
 
 @end

@@ -24,6 +24,8 @@
         self.remark = [coder decodeObjectForKey:@"remark"];
         self.img = [coder decodeObjectForKey:@"img"];
         self.company = [coder decodeObjectForKey:@"company"];
+        self.qq = [coder decodeObjectForKey:@"qq"];
+        self.email = [coder decodeObjectForKey:@"email"];
     }
     return self;
 }
@@ -39,6 +41,8 @@
     [coder encodeObject:self.remark forKey:@"remark"];
     [coder encodeObject:self.img forKey:@"img"];
     [coder encodeObject:self.company forKey:@"company"];
+    [coder encodeObject:self.email forKey:@"email"];
+    [coder encodeObject:self.qq forKey:@"qq"];
 }
 
 
