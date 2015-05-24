@@ -46,6 +46,12 @@
     
     jobDetailController = [[TTBJobDetailController alloc]init];
     membreController = [[TTBMemberController alloc]init];
+    if(_identity)
+    {
+        jobDetailController.identity = _identity;
+        membreController.identity = _identity;
+    }
+    
     [membreController.view setNeedsLayout];
     
     [self addChildViewController:jobDetailController];

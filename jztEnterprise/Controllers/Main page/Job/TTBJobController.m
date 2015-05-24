@@ -11,10 +11,20 @@
 #import "TTBJobCell.h"
 #import "TTBJobManageController.h"
 #import "TTBReleaseJobController.h"
+#import "TTBMyJobParam.h"
+#import "TTBUserEntity.h"
+#import "TTBMainPageProcess.h"
+#import "TTBMyJobListEntity.h"
+#import "MJRefresh.h"
+#import "UIImageView+WebCache.h"
 
 @interface TTBJobController ()<UITableViewDataSource,UITableViewDelegate>
 {
     TTBJobViewBase *_baseView;
+    TTBMyJobParam *param;
+    TTBUserEntity *userEntiry;
+    
+    NSMutableArray *jobList;
 }
 
 @end
@@ -34,7 +44,61 @@
         _baseView.baseTableView.delegate = self;
         
         self.navigationItem.rightBarButtonItems = [TTBUtility customBarButtonItemWithNormalImg:nil pressedImg:nil text:@"发布招募" target:self action:@selector(releaseJobBtnClicked) spacing:-15];
+        
+        userEntiry = [TTBUtility readUserDefaults:USER_DEFAULT_ENTITY_KEY];
+        param = [[TTBMyJobParam alloc]init];
+        param.pageSize = 8;
+        param.page = 1;
+        param.enterId = userEntiry.identity;
+        
+        jobList = [NSMutableArray array];
+        
+        [_baseView.baseTableView addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(headerUpdate)];
+        [_baseView.baseTableView.header setTitle:@"" forState:MJRefreshHeaderStateIdle];
+        [_baseView.baseTableView.header setTitle:@"释放刷新" forState:MJRefreshHeaderStatePulling];
+        [_baseView.baseTableView.header setTitle:@"正在刷新" forState:MJRefreshHeaderStateRefreshing];
+        
+        [_baseView.baseTableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(footerUpdate)];
+        [_baseView.baseTableView.footer setTitle:@"" forState:MJRefreshFooterStateIdle];
+        [_baseView.baseTableView.footer setTitle:@"没有更多数据" forState:MJRefreshFooterStateNoMoreData];
+        [_baseView.baseTableView.footer setTitle:@"正在刷新" forState:MJRefreshFooterStateRefreshing];
     }
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    param.page = 1;
+    [_baseView.baseTableView.footer resetNoMoreData];
+    
+    [[TTBMainPageProcess shareInstance]getMyJobWithParam:[param getDictionary] ParentView:nil progressText:@"获取中..." success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        int code = [[responseObject objectForKey:@"code"] intValue];
+        if(code == 200)
+        {
+            [jobList removeAllObjects];
+            NSArray *jobArr = [responseObject objectForKey:@"data"];
+            for(int i = 0;i<jobArr.count;++i)
+            {
+                TTBMyJobListEntity *entity = [[TTBMyJobListEntity alloc]initWithAttributes:[jobArr objectAtIndex:i]];
+                [jobList addObject:entity];
+            }
+            
+            [_baseView.baseTableView reloadData];
+        }
+        else
+        {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"错误提示" message:[responseObject objectForKey:@"message"] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [alert show];
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"错误提示" message:@"网络故障!" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alert show];
+        
+    }];
 }
 
 - (void)releaseJobBtnClicked
@@ -44,14 +108,101 @@
     [self.navigationController pushViewController:releaseJobController animated:YES];
 }
 
-#pragma mark  - UITableViewDataSource
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+#pragma -mark 下拉刷新
+- (void)headerUpdate
 {
-    return 3;
+    param.page = 1;
+    
+    [[TTBMainPageProcess shareInstance]getMyJobWithParam:[param getDictionary] ParentView:nil progressText:@"获取中..." success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        int code = [[responseObject objectForKey:@"code"] intValue];
+        if(code == 200)
+        {
+            [jobList removeAllObjects];
+            NSArray *jobArr = [responseObject objectForKey:@"data"];
+            for(int i = 0;i<jobArr.count;++i)
+            {
+                TTBMyJobListEntity *entity = [[TTBMyJobListEntity alloc]initWithAttributes:[jobArr objectAtIndex:i]];
+                [jobList addObject:entity];
+            }
+            
+            [_baseView.baseTableView reloadData];
+            [_baseView.baseTableView.header endRefreshing];
+            if (param.pageSize == jobArr.count)
+            {
+                [_baseView.baseTableView.footer resetNoMoreData];
+            }
+            else
+            {
+                [_baseView.baseTableView.footer noticeNoMoreData];
+            }
+        }
+        else
+        {
+            [_baseView.baseTableView.header endRefreshing];
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"错误提示" message:[responseObject objectForKey:@"message"] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [alert show];
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        [_baseView.baseTableView.header endRefreshing];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"错误提示" message:@"网络故障!" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alert show];
+        
+    }];
+
 }
+
+#pragma -mark 上拉加载
+- (void)footerUpdate
+{
+    param.page++;
+    
+    [[TTBMainPageProcess shareInstance]getMyJobWithParam:[param getDictionary] ParentView:nil progressText:@"获取中..." success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        int code = [[responseObject objectForKey:@"code"] intValue];
+        if(code == 200)
+        {
+            NSArray *jobArr = [responseObject objectForKey:@"data"];
+            for(int i = 0;i<jobArr.count;++i)
+            {
+                TTBMyJobListEntity *entity = [[TTBMyJobListEntity alloc]initWithAttributes:[jobArr objectAtIndex:i]];
+                [jobList addObject:entity];
+            }
+            
+            [_baseView.baseTableView reloadData];
+            [_baseView.baseTableView.footer endRefreshing];
+            
+            if (param.pageSize == jobArr.count)
+            {
+                [_baseView.baseTableView.footer resetNoMoreData];
+            }
+            else
+            {
+                [_baseView.baseTableView.footer noticeNoMoreData];
+            }
+        }
+        else
+        {
+            [_baseView.baseTableView.footer endRefreshing];
+//            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"错误提示" message:[responseObject objectForKey:@"message"] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+//            [alert show];
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        [_baseView.baseTableView.footer endRefreshing];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"错误提示" message:@"网络故障!" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alert show];
+        
+    }];
+}
+
+#pragma mark  - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 7;
+    return jobList.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -63,42 +214,13 @@
         cell = [[TTBJobCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
-    cell.titleLab.text = @"杭州兼职兔招聘APP试玩人员（仔细阅读备注信息）";
-    cell.jobImg.image = [UIImage imageNamed:@"work"];
-  
-    if(indexPath.row == 0)
-    {
-        [cell setJobProcess:JobProcess_AllSignIn];
-        cell.processLab.text = @"20/20人";
-    }
-    if(indexPath.row == 1)
-    {
-        [cell setJobProcess:JobProcess_NotAllSignIn];
-        cell.processLab.text = @"16/20人";
-    }
-    if(indexPath.row == 2)
-    {
-        [cell setJobProcess:JobProcess_Recruiting];
-        cell.statusLab.text = @"64%";
-        cell.processBar.process = 0.64;
-    }
-    if(indexPath.row == 3)
-    {
-        [cell setJobProcess:JobProcess_Checking];
-    }
-    if(indexPath.row == 4)
-    {
-        [cell setJobProcess:JobProcess_FailToChecking];
-    }
-    if(indexPath.row == 5)
-    {
-        [cell setJobProcess:JobProcess_Finished];
-    }
-    if(indexPath.row == 6)
-    {
-        [cell setJobProcess:JobProcess_WaitToFinish];
-    }
+    TTBMyJobListEntity *entity = (TTBMyJobListEntity *)[jobList objectAtIndex:indexPath.row];
     
+    cell.titleLab.text = [NSString stringWithFormat:@"%@ - %@ (%@)",entity.title,entity.jobType,entity.workTimeType == 1?@"长期":@"短期"];
+    cell.jobImg.image = [UIImage imageNamed:@"work"];
+    [cell.jobImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",APP_BASE_URL,entity.logo]] placeholderImage:[TTBUtility getDefaultImgWithSize:CGSizeMake(JobCellJobImgWidth, JobCellJobImgHeight)] options:SDWebImageRefreshCached];
+    cell.processLab.text = [NSString stringWithFormat:@"%d/%d人",entity.num - entity.remaining,entity.num];
+    cell.statusLab.text = [NSString stringWithFormat:@"报名截止：%@",entity.deadline];
     
     return cell;
 }
@@ -109,31 +231,6 @@
 //}
 
 #pragma mark - UITableViewDelegate
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return JobCellSectionHeight;
-}
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, JobCellSectionHeight)];
-    view.backgroundColor = VIEW_BACKGROUND;
-    [view addLineWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 0.5)];
-    [view addLineWithFrame:CGRectMake(0, JobCellSectionHeight - 0.5, SCREEN_WIDTH, 0.5)];
-    
-    UILabel *titleLab = [[UILabel alloc]initWithFrame:CGRectMake(12.5, 0, SCREEN_WIDTH - 25, JobCellSectionHeight)];
-    titleLab.font = [UIFont systemFontOfSize:APP_FONT_SIZE_SMALL + 2];
-    titleLab.textColor = APP_FONT_COLOR_NORMAL;
-    [view addSubview:titleLab];
-    
-    if(section == 0)
-        titleLab.text = @"今日招募（2）";
-    if(section == 1)
-        titleLab.text = @"招募中（2）";
-    if(section == 2)
-        titleLab.text = @"审核中（2）";
-    
-    return view;
-}
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if ([tableView respondsToSelector:@selector(setSeparatorInset:)]) {
@@ -159,7 +256,10 @@
     TTBJobCell *cell = (TTBJobCell *)[tableView cellForRowAtIndexPath:indexPath];
     cell.selected = NO;
     
+    TTBMyJobListEntity *entity = (TTBMyJobListEntity *)[jobList objectAtIndex:indexPath.row];
+    
     TTBJobManageController *jobManageController = [[TTBJobManageController alloc]init];
+    jobManageController.identity = entity.identity;
     jobManageController.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:jobManageController animated:YES];
     

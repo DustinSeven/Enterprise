@@ -12,8 +12,8 @@
 
 @property (nonatomic , strong)NSString *jobImg;
 @property (nonatomic , strong)NSString *jobName;
-@property (nonatomic , strong)NSString *jobState;
-@property (nonatomic , strong)NSString *jobProcess;
+@property (nonatomic , assign)int num;
+@property (nonatomic , assign)int remaining;
 @property (nonatomic , strong)NSString *jobTime;
 @property (nonatomic , strong)NSString *jobAddress;
 @property (nonatomic , strong)NSString *jobType;

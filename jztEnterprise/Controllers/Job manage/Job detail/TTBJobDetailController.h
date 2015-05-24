@@ -11,4 +11,6 @@
 
 @interface TTBJobDetailController : TTBBaseController
 
+@property (nonatomic , strong) NSString *identity;
+
 @end

@@ -8,6 +8,7 @@
 
 #import "TTBBaseController.h"
 #import "TTBReleaseJobCell.h"
+#import "TTBReleaseJobProcess.h"
 
 @interface TTBReleaseJobController : TTBBaseController
 

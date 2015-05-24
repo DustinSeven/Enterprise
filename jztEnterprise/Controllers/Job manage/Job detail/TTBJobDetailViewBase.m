@@ -15,4 +15,8 @@
     
 }
 
+- (void)setContentHidden:(BOOL)is
+{
+    
+}
 @end

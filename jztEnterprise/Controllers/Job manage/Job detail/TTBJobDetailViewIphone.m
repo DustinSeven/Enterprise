@@ -39,6 +39,14 @@
     return self;
 }
 
+- (void)setContentHidden:(BOOL)is
+{
+    headBackView.hidden = is;
+    midBackView1.hidden = is;
+    midBackView2.hidden = is;
+    footBackView.hidden = is;
+}
+
 - (void)initWitgets
 {
     self.backgroundColor = VIEW_BACKGROUND;
@@ -69,6 +77,7 @@
     [self.baseScrollView addSubview:midBackView1];
     
     self.jobImg = [[UIImageView alloc]init];
+    self.jobImg.userInteractionEnabled = YES;
     [midBackView1 addSubview:self.jobImg];
     
     self.titleLab = [[UILabel alloc]init];
@@ -232,6 +241,8 @@
     self.stopRecruitBtn.layer.cornerRadius = 3;
     self.stopRecruitBtn.hidden = YES;
     [self.baseScrollView addSubview:self.stopRecruitBtn];
+    
+    [self setContentHidden:YES];
 }
 
 #pragma mark - editContentBtnClicked

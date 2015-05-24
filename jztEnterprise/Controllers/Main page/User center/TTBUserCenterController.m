@@ -8,7 +8,6 @@
 
 #import "TTBUserCenterController.h"
 #import "TTBUserCenterViewIphone.h"
-#import "TTBMyRecruitController.h"
 #import "TTBSettingController.h"
 #import "TTBReleaseJobController.h"
 #import "TTBUserEntity.h"

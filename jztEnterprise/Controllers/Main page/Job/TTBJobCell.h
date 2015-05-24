@@ -35,8 +35,5 @@ typedef enum
 @property (nonatomic , strong)UILabel *titleLab;
 @property (nonatomic , strong)UILabel *processLab;
 @property (nonatomic , strong)UILabel *statusLab;
-@property (nonatomic , strong)TTBProcessBar *processBar;
-
-- (void)setJobProcess:(JobProcess)jobProcess;
 
 @end

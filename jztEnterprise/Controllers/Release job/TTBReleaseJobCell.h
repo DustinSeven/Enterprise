@@ -22,8 +22,9 @@ typedef enum
     ReleaseJobCellType_CountWay,
     ReleaseJobCellType_Deadline,
     ReleaseJobCellType_WorkDate,
+    ReleaseJobCellType_WorkTime,
     ReleaseJobCellType_NumOfWorker,
-//    ReleaseJobCellType_JobArea,
+    ReleaseJobCellType_JobArea,
     ReleaseJobCellType_JobAddress,
     ReleaseJobCellType_JobContent,
     ReleaseJobCellType_Sex,
@@ -35,11 +36,11 @@ typedef enum
 @interface TTBReleaseJobCell : TTBBaseTableViewCell
 
 @property (nonatomic , strong) UILabel *titleLab;
-@property (nonatomic , strong) UITextField *contentText;
-@property (nonatomic , strong) UILabel *tipLab;
 @property (nonatomic , strong) UIImageView *tipImg;
 @property (nonatomic , strong) UIView *line;
 @property (nonatomic , strong) UITextView *jobContentView;
+
+
 
 - (void)initReleaseJobCellView:(ReleaseJobCellType)releaseJobCellType;
 

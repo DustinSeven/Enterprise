@@ -51,5 +51,6 @@
 @property (nonatomic , strong)UIButton *stopRecruitBtn;
 @property (nonatomic , strong)UIButton *editWorkerNumBtn;
 
+- (void)setContentHidden:(BOOL)is;
 
 @end

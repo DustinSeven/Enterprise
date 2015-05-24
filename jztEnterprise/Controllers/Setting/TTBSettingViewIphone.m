@@ -58,7 +58,7 @@
 {
     self.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     
-    self.baseTableView.frame = CGRectMake(0, HeadViewHeight + 10, SCREEN_WIDTH, 5 * SettingListCellHeight);
+    self.baseTableView.frame = CGRectMake(0, HeadViewHeight + 10, SCREEN_WIDTH, SettingListCellHeight);
     
     line1.frame = CGRectMake(0, self.baseTableView.frame.origin.y - 0.5, SCREEN_WIDTH, 0.5);
     

@@ -60,6 +60,13 @@
 #define CHANGE_PWD_URL @"/parttimejobAPI/enterprisechangepwd"
 #define UPLOAD_USER_IMG_URL @"/parttimejobAPI/uploadenterimg"
 #define UPDATE_ENTER_INFO_URL @"/parttimejobAPI/updateenterinfo"
+#define GET_ALL_PROVINCE_URL @"/parttimejobAPI/getprovince"
+#define GET_CITY_URL @"/parttimejobAPI/getcity"
+#define GET_AREA_URL @"/parttimejobAPI/getarea"
+#define RELEASE_JOB_URL @"/parttimejobAPI/releasejob"
+#define GET_MY_JOB_URL @"/parttimejobAPI/getmyjoblist"
+#define UPLOAD_JOB_IMG_URL @"/parttimejobAPI/uploadjobimg"
+#define GET_JOB_DETAIL_URL @"/parttimejobAPI/getjobdetail"
 
 
 #endif

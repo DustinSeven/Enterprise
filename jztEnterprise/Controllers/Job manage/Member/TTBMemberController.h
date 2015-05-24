@@ -12,4 +12,6 @@
 
 @interface TTBMemberController : TTBBaseController
 
+@property (nonatomic , strong) NSString *identity;
+
 @end
