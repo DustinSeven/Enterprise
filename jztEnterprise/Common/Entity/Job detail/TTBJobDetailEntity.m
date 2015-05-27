@@ -18,6 +18,10 @@
     {
         if(![[dict objectForKey:@"parttimlogo"] isKindOfClass:[NSNull class]] && ![[dict objectForKey:@"parttimlogo"] isEqualToString:@""])
             self.jobImg = [dict objectForKey:@"parttimlogo"];
+        if(![[dict objectForKey:@"worktimetype"] isKindOfClass:[NSNull class]] && ![[dict objectForKey:@"worktimetype"] isEqualToString:@""])
+            self.workTimeType = [dict objectForKey:@"worktimetype"];
+        if(![[dict objectForKey:@"jobid"] isKindOfClass:[NSNull class]])
+            self.identity = [[dict objectForKey:@"parttimeid"] longValue];
         if(![[dict objectForKey:@"recruitment_title"] isKindOfClass:[NSNull class]] && ![[dict objectForKey:@"recruitment_title"] isEqualToString:@""])
             self.jobName = [dict objectForKey:@"recruitment_title"];
         if(![[dict objectForKey:@"work_content"] isKindOfClass:[NSNull class]] && ![[dict objectForKey:@"work_content"] isEqualToString:@""])
@@ -32,6 +36,8 @@
             self.remaining = [[dict objectForKey:@"remaining"] intValue];
         if(![[dict objectForKey:@"parttimejob_num"] isKindOfClass:[NSNull class]])
             self.num = [[dict objectForKey:@"parttimejob_num"] intValue];
+        if(![[dict objectForKey:@"signum"] isKindOfClass:[NSNull class]])
+            self.sigNum = [[dict objectForKey:@"signum"] intValue];
     }
     return self;
 }

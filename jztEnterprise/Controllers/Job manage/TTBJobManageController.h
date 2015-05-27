@@ -12,5 +12,6 @@
 @interface TTBJobManageController : TTBBaseController
 
 @property (nonatomic , strong) NSString *identity;
+@property (nonatomic , assign) BOOL isLong;
 
 @end

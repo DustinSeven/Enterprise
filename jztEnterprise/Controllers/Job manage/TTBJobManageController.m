@@ -50,6 +50,7 @@
     {
         jobDetailController.identity = _identity;
         membreController.identity = _identity;
+        membreController.isLong = _isLong;
     }
     
     [membreController.view setNeedsLayout];

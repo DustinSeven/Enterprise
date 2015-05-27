@@ -1,17 +1,17 @@
 //
-//  TTBEditWorkerNumController.h
+//  TTBMyShortJobDateEntity.h
 //  jztEnterprise
 //
-//  Created by 李明伟 on 15/1/30.
+//  Created by Lee on 15/5/26.
 //  Copyright (c) 2015年 TTB. All rights reserved.
 //
 
-#import "TTBBaseController.h"
+#import "TTBBaseEntity.h"
 
-@interface TTBEditWorkerNumController : TTBBaseController
+@interface TTBMyShortJobDateEntity : TTBBaseEntity
 
 @property (nonatomic , strong) NSString *identity;
-@property (nonatomic , assign) BOOL isLong;
+@property (nonatomic , strong) NSString *workDate;
 @property (nonatomic , assign) int num;
 @property (nonatomic , assign) int remaining;
 

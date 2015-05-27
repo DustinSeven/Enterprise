@@ -260,6 +260,7 @@
     
     TTBJobManageController *jobManageController = [[TTBJobManageController alloc]init];
     jobManageController.identity = entity.identity;
+    jobManageController.isLong = entity.workTimeType == 1?YES:NO;
     jobManageController.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:jobManageController animated:YES];
     

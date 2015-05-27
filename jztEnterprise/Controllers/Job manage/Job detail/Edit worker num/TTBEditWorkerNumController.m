@@ -1,3 +1,5 @@
+
+
 //
 //  TTBEditWorkerNumController.m
 //  jztEnterprise
@@ -9,10 +11,13 @@
 #import "TTBEditWorkerNumController.h"
 #import "TTBEditWorkerNumViewIphone.h"
 #import "TTBEditWorkerNumCell.h"
+#import "TTBJobManagerProcess.h"
+#import "TTBMyShortJobDateEntity.h"
 
-@interface TTBEditWorkerNumController ()<UITableViewDataSource,UITableViewDelegate>
+@interface TTBEditWorkerNumController ()<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 {
     TTBEditWorkerNumViewBase *_baseView;
+    NSMutableDictionary *param;
 }
 
 @end
@@ -31,14 +36,85 @@
         _baseView.baseTableView.dataSource = self;
         _baseView.baseTableView.delegate = self;
         
+        [_baseView.submitBtn addTarget:self action:@selector(submitBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+        
         self.title = @"修改人数";
+        
+        param = [[NSMutableDictionary alloc]init];
+        [param setValue:_identity forKey:@"jobid"];
+        
+        
+        if(!_isLong)
+            _remaining = 0;
     }
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+//    if(!_isLong)
+//    {
+//        NSMutableDictionary *shortParam = [[NSMutableDictionary alloc]init];
+//        [shortParam setValue:_identity forKey:@"jobid"];
+//        
+//        [[TTBJobManagerProcess shareInstance]getMyJobDateWithParam:shortParam ParentView:nil progressText:@"获取中..." success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//            
+//            int code = [[responseObject objectForKey:@"code"] intValue];
+//            if(code == 200)
+//            {
+//                NSArray *arr = [responseObject objectForKey:@"data"];
+//                for(int i = 0;i<arr.count;++i)
+//                {
+//                    TTBMyShortJobDateEntity *entity = [[TTBMyShortJobDateEntity alloc]initWithAttributes:[arr objectAtIndex:i]];
+//                    [dateArr addObject:entity];
+//                }
+//                
+//                [_baseView.baseTableView reloadData];
+//            }
+//            else
+//            {
+//                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:[responseObject objectForKey:@"message"] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+//                [alert show];
+//            }
+//            
+//        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//            
+//            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"网络连接超时!" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+//            [alert show];
+//        }];
+//    }
+}
+
+#pragma -mark UIAlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma -mark 提交按钮事件
+- (void)submitBtnClicked:(UIButton *)button
+{
+    TTBEditWorkerNumCell *cell = (TTBEditWorkerNumCell *)[_baseView.baseTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    [param setValue:[NSString stringWithFormat:@"%d",_num + cell.changedValue] forKey:@"num"];
+        
+    [[TTBJobManagerProcess shareInstance]updateWorkerNumWithParam:param ParentView:nil progressText:@"修改中..." success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"修改成功!" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alert show];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"错误提示" message:@"网络连接超时!" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alert show];
+        
+    }];
 }
 
 #pragma mark  - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -49,27 +125,44 @@
     {
         cell = [[TTBEditWorkerNumCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
-    cell.dateLab.text = @"12月12日：";
     
-    cell.numOrgLab.text = @"20人";
+    float sliderValue;
+    
+    if(_isLong)
+    {
+        cell.dateLab.text = @"长期兼职：";
+        
+        
+    }
+    else
+    {
+        cell.dateLab.text = @"短期兼职：";
+    }
+    
+    cell.numOrgLab.text = [NSString stringWithFormat:@"%d人",_num];
+    
+    cell.minNumLab.text = [NSString stringWithFormat:@"%d",_num - _remaining];
+    cell.maxNumLab.text = [NSString stringWithFormat:@"%d",2 * _num];
+    
+    sliderValue = (float)(_num + cell.changedValue - (_num - _remaining)) / (_num * 2 - (_num - _remaining));
+    
     CGSize numOrgLabSize = [cell.numOrgLab sizeThatFits:CGSizeMake(CGFLOAT_MIN, EditWorkerNumCellHeight / 2)];
     cell.numOrgLab.frame = CGRectMake(CGRectGetMaxX(cell.workerImg.frame) + 5, 0, numOrgLabSize.width, EditWorkerNumCellHeight / 2);
     
-    NSMutableAttributedString *changedNumStr = [[NSMutableAttributedString alloc]initWithString:@"+0人"];
+    NSString *mark;
+    if(sliderValue >= 0)
+        mark = @"+";
+    else
+        mark = @"-";
+    NSMutableAttributedString *changedNumStr = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"%@%d人",mark,abs(cell.changedValue)]];
     NSRange range = NSMakeRange(1, changedNumStr.length - 2);
     [changedNumStr addAttribute:NSForegroundColorAttributeName value:MainColorNormal range:range];
     cell.numChangedLab.attributedText = changedNumStr;
     cell.numChangedLab.frame = CGRectMake(CGRectGetMaxX(cell.numOrgLab.frame), 0, (SCREEN_WIDTH - CGRectGetMaxX(cell.numOrgLab.frame) - 12.5), EditWorkerNumCellHeight / 2);
-    
-    cell.minNumLab.text = @"16";
-    cell.maxNumLab.text = @"40";
-    
-    float sliderValue = (20.0 - 16.0) / (40.0 - 16.0);
-    
     cell.baseSlider.value = sliderValue;
     
-    cell.baseSlider.tag = 1000 + indexPath.row;
     
+    cell.baseSlider.tag = 1000 + indexPath.row;
     [cell.baseSlider addTarget:self action:@selector(sliderValueChange:) forControlEvents:UIControlEventValueChanged];
     [cell.addBtn addTarget:self action:@selector(addBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     cell.addBtn.tag = 2000 + indexPath.row;
@@ -116,16 +209,27 @@
     int index = (int)button.tag - 2000;
     TTBEditWorkerNumCell *cell = (TTBEditWorkerNumCell *)[_baseView.baseTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
     
-    int sliderValue = (int)(cell.baseSlider.value * (40 - 16) + 16);
-    if(sliderValue < 2 * 20)
+    int sliderValue;
+    int num;
+    
+    sliderValue = cell.changedValue + _num;
+    num = _num;
+
+    
+    if(sliderValue < 2 * num)
+    {
         sliderValue++;
+        cell.changedValue++;
+    }
     NSString *mark;
-    if(sliderValue >= 20)
+    if(sliderValue >= num)
         mark = @"+";
     else
         mark = @"-";
-    cell.baseSlider.value = (sliderValue - 16.0) / (40.0 - 16.0);
-    NSMutableAttributedString *changedNumStr = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"%@%d人",mark,abs(sliderValue - 20)]];
+    
+    cell.baseSlider.value = (float)(_num + cell.changedValue - (_num - _remaining)) / (_num * 2 - (_num - _remaining));
+
+    NSMutableAttributedString *changedNumStr = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"%@%d人",mark,abs(cell.changedValue)]];
     NSRange range = NSMakeRange(1, changedNumStr.length - 2);
     [changedNumStr addAttribute:NSForegroundColorAttributeName value:MainColorNormal range:range];
     cell.numChangedLab.attributedText = changedNumStr;
@@ -137,16 +241,28 @@
     int index = (int)button.tag - 3000;
     TTBEditWorkerNumCell *cell = (TTBEditWorkerNumCell *)[_baseView.baseTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
     
-    int sliderValue = (int)(cell.baseSlider.value * (40 - 16) + 16);
-    if(sliderValue > 16)
+    int sliderValue;
+    int num;
+
+    sliderValue = cell.changedValue + _num;
+    num = _num;
+    
+    if(sliderValue > (_num - _remaining))
+    {
         sliderValue--;
+        cell.changedValue--;
+    }
+    
+    
     NSString *mark;
-    if(sliderValue >= 20)
+    if(sliderValue >= num)
         mark = @"+";
     else
         mark = @"-";
-    cell.baseSlider.value = (sliderValue - 16.0) / (40.0 - 16.0);
-    NSMutableAttributedString *changedNumStr = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"%@%d人",mark,abs(sliderValue - 20)]];
+
+    cell.baseSlider.value = (float)(_num + cell.changedValue - (_num - _remaining)) / (_num * 2 - (_num - _remaining));
+
+    NSMutableAttributedString *changedNumStr = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"%@%d人",mark,abs(cell.changedValue)]];
     NSRange range = NSMakeRange(1, changedNumStr.length - 2);
     [changedNumStr addAttribute:NSForegroundColorAttributeName value:MainColorNormal range:range];
     cell.numChangedLab.attributedText = changedNumStr;
@@ -158,7 +274,12 @@
     int index = (int)slider.tag - 1000;
     TTBEditWorkerNumCell *cell = (TTBEditWorkerNumCell *)[_baseView.baseTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
     
-    int sliderValue = (int)(cell.baseSlider.value * (40 - 16) + 16 - 20);
+    int sliderValue;
+
+    sliderValue = (int)(cell.baseSlider.value * (2 * _num - (_num - _remaining)) + (_num - _remaining) - _num);
+    cell.changedValue = sliderValue;
+    
+    
     NSString *mark;
     if(sliderValue >= 0)
         mark = @"+";

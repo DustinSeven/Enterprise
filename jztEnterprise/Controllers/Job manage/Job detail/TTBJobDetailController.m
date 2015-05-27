@@ -12,7 +12,7 @@
 #import "TTBJobManagerProcess.h"
 #import "UIImageView+WebCache.h"
 
-@interface TTBJobDetailController ()<UITextViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@interface TTBJobDetailController ()<UITextViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIScrollViewDelegate,UIAlertViewDelegate>
 {
     TTBJobDetailViewBase *_baseView;
     TTBJobDetailEntity *jobDetailEntity;
@@ -32,6 +32,8 @@
         _baseView = [[TTBJobDetailViewIphone alloc]init];
         self.view = _baseView;
         
+        _baseView.baseScrollView.delegate = self;
+        
         imgPicker = [[UIImagePickerController alloc] init];
         imgPicker.delegate = self;
         imgPicker.allowsEditing = YES;//设置可编辑
@@ -41,11 +43,13 @@
         
         jobDetailEntity = [[TTBJobDetailEntity alloc]init];
         
-        [_baseView.signInBtn addTarget:self action:@selector(signInBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
         [_baseView.editWorkerNumBtn addTarget:self action:@selector(editWorkerNumBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
         
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(jobImgTapped:)];
         [_baseView.jobImg addGestureRecognizer:tap];
+        
+        [_baseView.stopRecruitBtn addTarget:self action:@selector(stopRecruitBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [_baseView.editContentEnterBtn addTarget:self action:@selector(enterBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     }
 }
 
@@ -110,7 +114,73 @@
     _baseView.addressLab.text = jobDetailEntity.jobAddress;
     _baseView.jobTypeLab.text = jobDetailEntity.jobType;
     _baseView.jobContentText.text = jobDetailEntity.jobContent;
+    _baseView.stopRecruitBtn.hidden = NO;
     [_baseView setNeedsLayout];
+}
+
+#pragma -mark 确认修改按钮事件
+- (void)enterBtnClicked:(UIButton *)button
+{
+    _baseView.editContentCancelBtn.hidden = YES;
+    _baseView.editContentEnterBtn.hidden = YES;
+    _baseView.stopRecruitBtn.hidden = NO;
+    [_baseView.jobContentText resignFirstResponder];
+    _baseView.jobContentText.editable = NO;
+    
+    NSMutableDictionary *param = [[NSMutableDictionary alloc]init];
+    [param setValue:[NSString stringWithFormat:@"%ld",jobDetailEntity.identity] forKey:@"jobid"];
+    [param setValue:_baseView.jobContentText.text forKey:@"jobcontent"];
+    
+    [[TTBJobManagerProcess shareInstance]updateJobWithParam:param ParentView:nil progressText:@"修改中..." success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"工作内容修改成功!" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alert show];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"错误提示" message:@"网络连接超时!" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alert show];
+        
+    }];
+}
+
+#pragma -mark 停止招募按钮事件
+- (void)stopRecruitBtnClicked:(UIButton *)button
+{
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"您确定要将此兼职下架吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定",nil];
+    alert.tag = 200;
+    [alert show];
+}
+
+#pragma -mark UIAlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(alertView.tag == 200)
+    {
+        NSMutableDictionary *param = [[NSMutableDictionary alloc]init];
+        [param setValue:[NSString stringWithFormat:@"%ld",jobDetailEntity.identity] forKey:@"jobid"];
+        
+        [[TTBJobManagerProcess shareInstance]disableJobWithParam:param ParentView:nil progressText:@"下架中..." success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"兼职下架成功!" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alert show];
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"错误提示" message:@"网络连接超时!" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alert show];
+            
+        }];
+    }
+    else
+        [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma -mark UIScrollViewDelegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [_baseView.jobContentText resignFirstResponder];
+    _baseView.jobContentText.editable = NO;
 }
 
 #pragma -mark 兼职logo点击事件
@@ -125,17 +195,20 @@
 - (void)editWorkerNumBtnClicked:(UIButton *)button
 {
     TTBEditWorkerNumController *editWorkerNumController = [[TTBEditWorkerNumController alloc]init];
+    editWorkerNumController.identity = [NSString stringWithFormat:@"%ld",jobDetailEntity.identity];
+    
+    editWorkerNumController.remaining = jobDetailEntity.remaining;
+    if([jobDetailEntity.workTimeType isEqualToString:@"longterm"])
+    {
+        editWorkerNumController.isLong = YES;
+        editWorkerNumController.num = jobDetailEntity.num;
+    }
+    else
+    {
+        editWorkerNumController.isLong = NO;
+        editWorkerNumController.num = jobDetailEntity.sigNum;
+    }
     [self.navigationController pushViewController:editWorkerNumController animated:YES];
-}
-
-#pragma mark - signInBtnClicked
-- (void)signInBtnClicked:(UIButton *)button
-{
-    TTBSignInController *signInController = [[TTBSignInController alloc]init];
-    TTBBaseNavController *signInNav = [[TTBBaseNavController alloc]initWithRootViewController:signInController];
-    [self.navigationController presentViewController:signInNav animated:YES completion:^{
-        
-    }];
 }
 
 #pragma mark - UITextViewDelegate

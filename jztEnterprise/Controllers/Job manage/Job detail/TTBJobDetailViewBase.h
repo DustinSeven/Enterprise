@@ -47,7 +47,6 @@
 @property (nonatomic , strong)UIButton *editContentBtn;
 @property (nonatomic , strong)UIButton *editContentEnterBtn;
 @property (nonatomic , strong)UIButton *editContentCancelBtn;
-@property (nonatomic , strong)UIButton *signInBtn;
 @property (nonatomic , strong)UIButton *stopRecruitBtn;
 @property (nonatomic , strong)UIButton *editWorkerNumBtn;
 

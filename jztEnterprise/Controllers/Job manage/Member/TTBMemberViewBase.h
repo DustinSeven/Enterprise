@@ -18,10 +18,6 @@
 
 @interface TTBMemberViewBase : UIView
 
-@property (nonatomic , strong) UILabel *jobTimeLab;
-@property (nonatomic , strong) UILabel *processLab;
-@property (nonatomic , strong) UIButton *forwardBtn;
-@property (nonatomic , strong) UIButton *backBtn;
 @property (nonatomic , strong) UITableView *baseTableView;
 
 @end

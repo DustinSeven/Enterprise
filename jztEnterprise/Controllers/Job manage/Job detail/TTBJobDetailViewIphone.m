@@ -181,7 +181,7 @@
     self.jobContentText.backgroundColor = [UIColor clearColor];
     self.jobContentText.font = [UIFont systemFontOfSize:APP_FONT_SIZE_NORMAL - 2];
     self.jobContentText.textColor = APP_FONT_COLOR_NORMAL;
-    self.jobContentText.editable = YES;
+    self.jobContentText.editable = NO;
     self.jobContentText.bounces = NO;
     [footBackView addSubview:self.jobContentText];
     
@@ -205,6 +205,7 @@
     self.editContentCancelBtn.layer.borderColor = SeparatorColor.CGColor;
     self.editContentCancelBtn.layer.borderWidth = 0.5;
     self.editContentCancelBtn.hidden = YES;
+    [self.editContentCancelBtn addTarget:self action:@selector(cancelBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.baseScrollView addSubview:self.editContentCancelBtn];
     
     self.editContentEnterBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -220,17 +221,6 @@
     self.editContentEnterBtn.hidden = YES;
     [self.baseScrollView addSubview:self.editContentEnterBtn];
     
-    self.signInBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.signInBtn setBackgroundImage:[TTBUtility imageWithColor:JobDetailSignInBtnColorNormal size:CGSizeMake(JobDetailSignInBtnWidth, JobDetailSignInBtnHeight)] forState:UIControlStateNormal];
-    [self.signInBtn setBackgroundImage:[TTBUtility imageWithColor:JobDetailSignInBtnColorPressed size:CGSizeMake(JobDetailSignInBtnWidth, JobDetailSignInBtnHeight)] forState:UIControlStateHighlighted];
-    [self.signInBtn setTitle:@"签到" forState:UIControlStateNormal];
-    [self.signInBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    self.signInBtn.titleLabel.font = [UIFont systemFontOfSize:APP_FONT_SIZE_NORMAL];
-    self.signInBtn.layer.masksToBounds = YES;
-    self.signInBtn.layer.cornerRadius = 3;
-//    self.signInBtn.hidden = YES;
-    [self.baseScrollView addSubview:self.signInBtn];
-    
     self.stopRecruitBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.stopRecruitBtn setBackgroundImage:[TTBUtility imageWithColor:JobDetailSignInBtnColorNormal size:CGSizeMake(JobDetailSignInBtnWidth, JobDetailSignInBtnHeight)] forState:UIControlStateNormal];
     [self.stopRecruitBtn setBackgroundImage:[TTBUtility imageWithColor:JobDetailSignInBtnColorPressed size:CGSizeMake(JobDetailSignInBtnWidth, JobDetailSignInBtnHeight)] forState:UIControlStateHighlighted];
@@ -245,14 +235,28 @@
     [self setContentHidden:YES];
 }
 
+#pragma -mark 取消按钮事件
+- (void)cancelBtnClicked:(UIButton *)button
+{
+    [self.jobContentText resignFirstResponder];
+    
+    self.editContentEnterBtn.hidden = YES;
+    self.editContentCancelBtn.hidden = YES;
+    self.stopRecruitBtn.hidden = NO;
+    self.jobContentText.editable = NO;
+}
+
 #pragma mark - editContentBtnClicked
 - (void)editContentBtnClicked:(UIButton *)button
 {
     self.jobContentText.editable = YES;
-    [self.jobContentText becomeFirstResponder];
-    
     self.editContentEnterBtn.hidden = NO;
     self.editContentCancelBtn.hidden = NO;
+    self.stopRecruitBtn.hidden = YES;
+    
+    dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 0.6 * NSEC_PER_SEC);
+    dispatch_after(time, dispatch_get_main_queue(), ^{ [self.jobContentText becomeFirstResponder]; });
+    
 }
 
 - (void)layoutSubviews
@@ -285,7 +289,7 @@
     
     processNoticeLab.frame = CGRectMake(CGRectGetMaxX(self.jobImg.frame) + 15, 92.5, 100, 10);
     
-    self.processBar.frame = CGRectMake(CGRectGetMaxX(self.jobImg.frame) + 15, CGRectGetMaxY(self.jobImg.frame) - 4, SCREEN_WIDTH - (CGRectGetMaxX(self.jobImg.frame) + 15) - 45, 4);
+    self.processBar.frame = CGRectMake(CGRectGetMaxX(self.jobImg.frame) + 15, CGRectGetMaxY(self.jobImg.frame) - 4, SCREEN_WIDTH - (CGRectGetMaxX(self.jobImg.frame) + 15) - 55, 4);
     
     self.statusLab.frame = CGRectMake(SCREEN_WIDTH - 65 ,CGRectGetMinY(self.processBar.frame) + (CGRectGetHeight(self.processBar.frame) - 10) / 2, 55, 10);
     
@@ -321,10 +325,12 @@
     self.editContentCancelBtn.frame = CGRectMake((SCREEN_WIDTH - JobDetailEnterBtnWidth * 2 - 10) / 2, CGRectGetMaxY(footBackView.frame) + JobDetailMainSpacing, JobDetailEnterBtnWidth, JobDetailEnterBtnHeight);
     self.editContentEnterBtn.frame = CGRectMake((SCREEN_WIDTH - JobDetailEnterBtnWidth * 2 - 10) / 2 + JobDetailEnterBtnWidth + JobDetailMainSpacing, CGRectGetMaxY(footBackView.frame) + JobDetailMainSpacing, JobDetailEnterBtnWidth, JobDetailEnterBtnHeight);
     
-    self.signInBtn.frame = CGRectMake((SCREEN_WIDTH - JobDetailSignInBtnWidth) / 2 , CGRectGetMaxY(footBackView.frame) + JobDetailMainSpacing, JobDetailSignInBtnWidth, JobDetailSignInBtnHeight);
     self.stopRecruitBtn.frame = CGRectMake((SCREEN_WIDTH - JobDetailSignInBtnWidth) / 2 , CGRectGetMaxY(footBackView.frame) + JobDetailMainSpacing, JobDetailSignInBtnWidth, JobDetailSignInBtnHeight);
     
-    self.baseScrollView.contentSize = CGSizeMake(SCREEN_WIDTH, CGRectGetMaxY(footBackView.frame) + JobDetailMainSpacing + JobDetailMainSpacing +  JobDetailEnterBtnHeight);
+    if(CGRectGetMaxY(footBackView.frame) + JobDetailMainSpacing + JobDetailMainSpacing +  JobDetailEnterBtnHeight <= SCREEN_HEIGHT - JobManageSegHeight)
+        self.baseScrollView.contentSize = CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT - JobManageSegHeight + 1);
+    else
+        self.baseScrollView.contentSize = CGSizeMake(SCREEN_WIDTH, CGRectGetMaxY(footBackView.frame) + JobDetailMainSpacing + JobDetailMainSpacing +  JobDetailEnterBtnHeight);
     
 }
 

@@ -28,4 +28,6 @@
 @property (nonatomic , strong) UILabel *minNumLab;
 @property (nonatomic , strong) UILabel *maxNumLab;
 
+@property (nonatomic , assign) int changedValue;
+
 @end

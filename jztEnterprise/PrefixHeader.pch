@@ -67,6 +67,12 @@
 #define GET_MY_JOB_URL @"/parttimejobAPI/getmyjoblist"
 #define UPLOAD_JOB_IMG_URL @"/parttimejobAPI/uploadjobimg"
 #define GET_JOB_DETAIL_URL @"/parttimejobAPI/getjobdetail"
+#define DISABLE_JOB_URL @"/parttimejobAPI/disablejob"
+#define UPDATE_JOB_URL @"/parttimejobAPI/updatejob"
+#define UPDATE_WORKER_NUM_URL @"/parttimejobAPI/updateworkernum"
+#define GET_MY_SHORT_JOB_DATE_URL @"/parttimejobAPI/getmyshortjobdate"
+#define GET_USER_JOB_URL @"/parttimejobAPI/getuserjob"
+#define DELETE_USER_JOB_URL @"/parttimejobAPI/deleteuserjob"
 
 
 #endif

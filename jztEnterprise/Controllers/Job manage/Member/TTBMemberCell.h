@@ -17,10 +17,8 @@
 @property (nonatomic , strong) UIImageView *userImg;
 @property (nonatomic , strong) UILabel *userNameLab;
 @property (nonatomic , strong) UILabel *schoolLab;
-@property (nonatomic , strong) UIImageView *tipImg;
 @property (nonatomic , strong) UIImageView *genderIcon;
 
-- (void)revolveTipImg;
 - (void)setGenderIconWithNum:(int)num;
 
 @end

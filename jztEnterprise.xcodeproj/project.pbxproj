@@ -142,7 +142,6 @@
 		4F8753771A78D02A006C5E80 /* SWTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F87536F1A78D02A006C5E80 /* SWTableViewCell.m */; };
 		4F8753781A78D02A006C5E80 /* SWUtilityButtonTapGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8753711A78D02A006C5E80 /* SWUtilityButtonTapGestureRecognizer.m */; };
 		4F8753791A78D02A006C5E80 /* SWUtilityButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8753731A78D02A006C5E80 /* SWUtilityButtonView.m */; };
-		4F87537C1A78D83C006C5E80 /* TTBMemberMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F87537B1A78D83C006C5E80 /* TTBMemberMenuCell.m */; };
 		4F8753811A78E137006C5E80 /* member_menu_phone_btn_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F87537D1A78E137006C5E80 /* member_menu_phone_btn_icon@2x.png */; };
 		4F8753821A78E137006C5E80 /* member_menu_sign_in_btn_icon_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F87537E1A78E137006C5E80 /* member_menu_sign_in_btn_icon_normal@2x.png */; };
 		4F8753831A78E137006C5E80 /* member_menu_session_btn_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F87537F1A78E137006C5E80 /* member_menu_session_btn_icon@2x.png */; };
@@ -215,6 +214,7 @@
 		4FBC74341A77756C000B8F7B /* calendar_pre_month_btn_icon_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FBC74331A77756C000B8F7B /* calendar_pre_month_btn_icon_normal@2x.png */; };
 		4FBC74371A778EB3000B8F7B /* release_job_read_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FBC74351A778EB3000B8F7B /* release_job_read_icon@2x.png */; };
 		4FBC74381A778EB3000B8F7B /* release_job_not_read_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FBC74361A778EB3000B8F7B /* release_job_not_read_icon@2x.png */; };
+		9B2E97C51B1410190081C562 /* TTBMyShortJobDateEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E97C41B1410190081C562 /* TTBMyShortJobDateEntity.m */; };
 		9B4880121AF7D2B2001EF1A1 /* TTBLoginParam.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4880111AF7D2B2001EF1A1 /* TTBLoginParam.m */; };
 		9B4880171AF7D41D001EF1A1 /* TTBHttpClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4880161AF7D41D001EF1A1 /* TTBHttpClient.m */; };
 		9B4880521AF7D475001EF1A1 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B48801A1AF7D475001EF1A1 /* AFHTTPRequestOperation.m */; };
@@ -241,6 +241,7 @@
 		9B48807A1AF7D7B3001EF1A1 /* MBProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9B4880741AF7D7B3001EF1A1 /* MBProgressHUD.bundle */; };
 		9B48807B1AF7D7B3001EF1A1 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4880761AF7D7B3001EF1A1 /* MBProgressHUD.m */; };
 		9B48807E1AF7D8B1001EF1A1 /* TTBUserEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B48807D1AF7D8B1001EF1A1 /* TTBUserEntity.m */; };
+		9B519B301B15BE6A00A916E5 /* TTBMemberEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B519B2F1B15BE6A00A916E5 /* TTBMemberEntity.m */; };
 		9B8F1AB81B09BDE500062E7E /* user_center_company_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B8F1AB71B09BDE500062E7E /* user_center_company_icon@2x.png */; };
 		9B8F1ABC1B09C2F000062E7E /* user_center_qq_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B8F1AB91B09C2F000062E7E /* user_center_qq_icon@2x.png */; };
 		9B8F1ABD1B09C2F000062E7E /* user_center_email_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B8F1ABA1B09C2F000062E7E /* user_center_email_icon@2x.png */; };
@@ -524,8 +525,6 @@
 		4F8753711A78D02A006C5E80 /* SWUtilityButtonTapGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWUtilityButtonTapGestureRecognizer.m; sourceTree = "<group>"; };
 		4F8753721A78D02A006C5E80 /* SWUtilityButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWUtilityButtonView.h; sourceTree = "<group>"; };
 		4F8753731A78D02A006C5E80 /* SWUtilityButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWUtilityButtonView.m; sourceTree = "<group>"; };
-		4F87537A1A78D83C006C5E80 /* TTBMemberMenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTBMemberMenuCell.h; sourceTree = "<group>"; };
-		4F87537B1A78D83C006C5E80 /* TTBMemberMenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTBMemberMenuCell.m; sourceTree = "<group>"; };
 		4F87537D1A78E137006C5E80 /* member_menu_phone_btn_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "member_menu_phone_btn_icon@2x.png"; sourceTree = "<group>"; };
 		4F87537E1A78E137006C5E80 /* member_menu_sign_in_btn_icon_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "member_menu_sign_in_btn_icon_normal@2x.png"; sourceTree = "<group>"; };
 		4F87537F1A78E137006C5E80 /* member_menu_session_btn_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "member_menu_session_btn_icon@2x.png"; sourceTree = "<group>"; };
@@ -642,6 +641,8 @@
 		4FBC74331A77756C000B8F7B /* calendar_pre_month_btn_icon_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar_pre_month_btn_icon_normal@2x.png"; sourceTree = "<group>"; };
 		4FBC74351A778EB3000B8F7B /* release_job_read_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "release_job_read_icon@2x.png"; sourceTree = "<group>"; };
 		4FBC74361A778EB3000B8F7B /* release_job_not_read_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "release_job_not_read_icon@2x.png"; sourceTree = "<group>"; };
+		9B2E97C31B1410190081C562 /* TTBMyShortJobDateEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTBMyShortJobDateEntity.h; sourceTree = "<group>"; };
+		9B2E97C41B1410190081C562 /* TTBMyShortJobDateEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTBMyShortJobDateEntity.m; sourceTree = "<group>"; };
 		9B4880101AF7D2B2001EF1A1 /* TTBLoginParam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTBLoginParam.h; sourceTree = "<group>"; };
 		9B4880111AF7D2B2001EF1A1 /* TTBLoginParam.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTBLoginParam.m; sourceTree = "<group>"; };
 		9B4880151AF7D41D001EF1A1 /* TTBHttpClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTBHttpClient.h; sourceTree = "<group>"; };
@@ -693,6 +694,8 @@
 		9B4880761AF7D7B3001EF1A1 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		9B48807C1AF7D8B1001EF1A1 /* TTBUserEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTBUserEntity.h; sourceTree = "<group>"; };
 		9B48807D1AF7D8B1001EF1A1 /* TTBUserEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTBUserEntity.m; sourceTree = "<group>"; };
+		9B519B2E1B15BE6A00A916E5 /* TTBMemberEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTBMemberEntity.h; sourceTree = "<group>"; };
+		9B519B2F1B15BE6A00A916E5 /* TTBMemberEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTBMemberEntity.m; sourceTree = "<group>"; };
 		9B8F1AB71B09BDE500062E7E /* user_center_company_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_center_company_icon@2x.png"; sourceTree = "<group>"; };
 		9B8F1AB91B09C2F000062E7E /* user_center_qq_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_center_qq_icon@2x.png"; sourceTree = "<group>"; };
 		9B8F1ABA1B09C2F000062E7E /* user_center_email_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_center_email_icon@2x.png"; sourceTree = "<group>"; };
@@ -933,7 +936,7 @@
 		4F5FF2271A726CF700A22805 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
-				9BEACB491B0F322D00B3ED8E /* Job manager */,
+				9B2E97C21B1410020081C562 /* Job manager */,
 				9BEACB001B0F0D8600B3ED8E /* Main page */,
 				9B94D8AC1B0C563900EE3696 /* Release job */,
 				9B8F1AC71B09F17300062E7E /* User center */,
@@ -1062,8 +1065,6 @@
 				4F5FF24C1A726CF700A22805 /* TTBMemberViewBase.m */,
 				4F5FF24D1A726CF700A22805 /* TTBMemberViewIphone.h */,
 				4F5FF24E1A726CF700A22805 /* TTBMemberViewIphone.m */,
-				4F87537A1A78D83C006C5E80 /* TTBMemberMenuCell.h */,
-				4F87537B1A78D83C006C5E80 /* TTBMemberMenuCell.m */,
 			);
 			path = Member;
 			sourceTree = "<group>";
@@ -1587,6 +1588,17 @@
 			path = Calendar;
 			sourceTree = "<group>";
 		};
+		9B2E97C21B1410020081C562 /* Job manager */ = {
+			isa = PBXGroup;
+			children = (
+				9B2E97C31B1410190081C562 /* TTBMyShortJobDateEntity.h */,
+				9B2E97C41B1410190081C562 /* TTBMyShortJobDateEntity.m */,
+				9B519B2E1B15BE6A00A916E5 /* TTBMemberEntity.h */,
+				9B519B2F1B15BE6A00A916E5 /* TTBMemberEntity.m */,
+			);
+			path = "Job manager";
+			sourceTree = "<group>";
+		};
 		9B48800F1AF7D26D001EF1A1 /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -1801,13 +1813,6 @@
 				9BEACB391B0F230A00B3ED8E /* UIView+MJExtension.m */,
 			);
 			path = MJRefresh;
-			sourceTree = "<group>";
-		};
-		9BEACB491B0F322D00B3ED8E /* Job manager */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Job manager";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2039,6 +2044,7 @@
 				4F8CCE141A75D5A50022779C /* TTBReleaseJobCell.m in Sources */,
 				9B4880691AF7D475001EF1A1 /* UIProgressView+AFNetworking.m in Sources */,
 				9B94D8AB1B0C3DE200EE3696 /* TTBReleaseJobProcess.m in Sources */,
+				9B519B301B15BE6A00A916E5 /* TTBMemberEntity.m in Sources */,
 				4F5FF30F1A726CF700A22805 /* TTBJobManageController.m in Sources */,
 				4F5FF2FC1A726CF700A22805 /* TTBBaseNavController.m in Sources */,
 				4FB78E531A7A175300B61B17 /* TTBGroupSendingController.m in Sources */,
@@ -2104,6 +2110,7 @@
 				4F8BC3171A7B8A6E00AAF8DA /* TTBEditWorkerNumController.m in Sources */,
 				4F5FF3081A726CF700A22805 /* TTBJobDetailController.m in Sources */,
 				4F5FF3121A726CF700A22805 /* TTBContactCell.m in Sources */,
+				9B2E97C51B1410190081C562 /* TTBMyShortJobDateEntity.m in Sources */,
 				9B4880671AF7D475001EF1A1 /* UIButton+AFNetworking.m in Sources */,
 				4F5FF3351A726CF700A22805 /* SDWebImageManager.m in Sources */,
 				4F5FF30A1A726CF700A22805 /* TTBJobDetailViewIphone.m in Sources */,
@@ -2152,7 +2159,6 @@
 				4F8BC3091A7B781900AAF8DA /* TTBChangePwdCell.m in Sources */,
 				9BA981991B0B06700021E47E /* TTBChangeInfoView.m in Sources */,
 				9BEACB071B0F101B00B3ED8E /* TTBMyJobListEntity.m in Sources */,
-				4F87537C1A78D83C006C5E80 /* TTBMemberMenuCell.m in Sources */,
 				9B48807E1AF7D8B1001EF1A1 /* TTBUserEntity.m in Sources */,
 				4F5FF3131A726CF700A22805 /* TTBContactController.m in Sources */,
 				9B94D8D71B0C71CC00EE3696 /* TTBReleaseJobParam.m in Sources */,
